@@ -29,7 +29,6 @@ Route::group([
 ], function ($router) {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-    Route::get('refresh', [AuthController::class, 'refresh']);
 
 
 });
@@ -45,6 +44,8 @@ Route::group([
     Route::post('my-orders', [ProfileController::class, 'myorders']);
     Route::post('my-favorite', [ProfileController::class, 'myfavorite']);
     Route::get('my-addresses', [ProfileController::class, 'myaddress']);
+    Route::get('refresh', [ProfileController::class, 'refresh']);
+
 
 });
 
