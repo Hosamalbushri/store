@@ -7,6 +7,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,14 +29,22 @@ Route::group([
 ], function ($router) {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-    Route::get('logout', [AuthController::class, 'logout']);
     Route::get('refresh', [AuthController::class, 'refresh']);
-    Route::get('me', [AuthController::class, 'me']);
-    Route::post('edit-profile', [AuthController::class, 'profile']);
-    Route::post('change-password', [AuthController::class, 'changePassword']);
-    Route::post('my-orders', [AuthController::class, 'myorders']);
-    Route::post('my-favorite', [AuthController::class, 'myfavorite']);
-    Route::get('my-addresses', [AuthController::class, 'myaddress']);
+
+
+});
+
+Route::group([
+    'middleware' => 'jwt.verify',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::get('logout', [ProfileController::class, 'logout']);
+    Route::get('me', [ProfileController::class, 'me']);
+    Route::post('edit-profile', [ProfileController::class, 'profile']);
+    Route::post('change-password', [ProfileController::class, 'changePassword']);
+    Route::post('my-orders', [ProfileController::class, 'myorders']);
+    Route::post('my-favorite', [ProfileController::class, 'myfavorite']);
+    Route::get('my-addresses', [ProfileController::class, 'myaddress']);
 
 });
 
@@ -56,7 +65,7 @@ Route::group([
 
 
 Route::group([
-    'middleware' => 'auth:api',
+    'middleware' => 'jwt.verify',
     'prefix' => 'cart'
 ], function () {
     Route::post('add_to_cart', [CartController::class, 'add']);
@@ -68,7 +77,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'auth:api',
+    'middleware' => 'jwt.verify',
     'prefix' => 'favorite'
 ], function () {
     Route::post('add_to_favorite', [FavoriteController::class, 'add']);
@@ -76,7 +85,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'auth:api',
+    'middleware' => 'jwt.verify',
     'prefix' => 'customer/address'
 ], function () {
     Route::post('create', [CustomerAddressController::class, 'create']);
@@ -87,7 +96,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'auth:api',
+    'middleware' => 'jwt.verify',
     'prefix' => 'order'
 ], function () {
     Route::post('create', [OrderController::class, 'create']);
@@ -96,7 +105,7 @@ Route::group([
     Route::post('update/{id}', [OrderController::class, 'update']);
     Route::group([
         'prefix' => 'detaile',
-        'middleware' => 'auth:api',
+        'middleware' => 'jwt.verify',
 
     ], function () {
         Route::post('delete/{id}', [OrderDetailsController::class, 'delete']);
@@ -107,5 +116,5 @@ Route::group([
 
 });
 
-Route::post('payment_types', [OrderController::class, 'payment_types'])->middleware('auth:api');
+Route::post('payment_types', [OrderController::class, 'payment_types'])->middleware('jwt.verify');
 
