@@ -24,24 +24,29 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group([
+    'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
+
+
 });
 
 Route::group([
     'middleware' => 'jwt.verify',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::get('logout', [AuthController::class, 'logout']);
-    Route::get('me', [AuthController::class, 'me']);
-    Route::post('edit-profile', [AuthController::class, 'profile']);
-    Route::post('change-password', [AuthController::class, 'changePassword']);
-    Route::post('my-orders', [AuthController::class, 'myorders']);
-    Route::post('my-favorite', [AuthController::class, 'myfavorite']);
-    Route::get('my-addresses', [AuthController::class, 'myaddress']);
-    Route::get('refresh', [AuthController::class, 'refresh']);
+    Route::get('logout', [ProfileController::class, 'logout']);
+    Route::get('me', [ProfileController::class, 'me']);
+    Route::post('edit-profile', [ProfileController::class, 'profile']);
+    Route::post('change-password', [ProfileController::class, 'changePassword']);
+    Route::post('my-orders', [ProfileController::class, 'myorders']);
+    Route::post('my-favorite', [ProfileController::class, 'myfavorite']);
+    Route::get('my-addresses', [ProfileController::class, 'myaddress']);
+    Route::get('refresh', [ProfileController::class, 'refresh']);
+
+
 });
 
 Route::group([
