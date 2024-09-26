@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
 
-    }
     public function payment_types()
     {
         $payment_type = PaymentType::get()->select('id','name');

@@ -19,11 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
-    'allowed_headers' => ['*'],
+    'allowed_origins' => ['https://beedo-market.site'],
+    'allowed_headers' => ['Content-Type', 'Authorization'],
 
     'exposed_headers' => [],
 

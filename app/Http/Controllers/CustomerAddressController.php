@@ -9,11 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerAddressController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
 
-    }
    public function create(Request $request)
    {
        try {

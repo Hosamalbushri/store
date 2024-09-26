@@ -24,11 +24,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
 
-    }
     /**
      * Get a JWT via given credentials.
      *
@@ -55,7 +51,7 @@ class AuthController extends Controller
 
         if($validator->fails()){
 
-            return response()->json(['message' =>$validator->errors()]);
+            return response()->json($validator->errors());
 
         }
 
